@@ -1,0 +1,45 @@
+1. GATSBY SOURCE FILE SYSYEM QUERIES
+  ALL FILE QUERY
+    query AllFile {
+      data: allFile(
+        sort: {fields: size, order: DESC}
+        limit: 5
+        filter: {relativePath: {}, name: {}}
+      ) {
+        totalCount
+        image_info: nodes {
+          name
+          size
+          relativePath
+        }
+      }
+    }
+
+  SINGLE FILE QUERY
+    query IndividualFile {
+      data: file(relativeDirectory: {eq: "test"}, name: {eq: "test_image2"}) {
+        name
+        size
+        relativePath
+      }
+    }
+
+
+2. NORMAL FETCH QUERY
+  query {
+    site {
+      info: siteMetadata {
+        author
+        complexData {
+          name
+          age
+        }
+        description
+        person {
+          name
+        }
+        simpleData
+        title
+      }
+    }
+  }

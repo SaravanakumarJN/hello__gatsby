@@ -1,0 +1,7 @@
+.nav {
+  display: flex;
+}
+
+.nav > * {
+  margin: 10px 15px;
+}

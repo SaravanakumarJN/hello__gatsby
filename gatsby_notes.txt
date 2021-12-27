@@ -1,0 +1,109 @@
+GATSBY 
+
+
+Scripts
+	=> gatsby develop (run application locally (port : 8000))
+	=> gatsby build (craete a public (build) file)
+	=> gatsby format (format the code with prettier)
+
+	=> npm start (runs `gatsby develop` internally (port : 8000))
+	=> serve (to have a look at the production build (port : 9000)) 
+	=> clean (clears the cached things and public (build) for new changes to be reflected)
+
+
+Routing / Pages
+	=> Every individual component/page in src/pages will be individual route	
+	=> Components/Pages should be default exports only
+
+	=> index.js is always is going to be the homepage
+	=> Error page should be name 404.js
+	=> For nested pages, create file inside folder 
+		Eg: 
+			Company (Folder)
+				|__  mission.js (File)
+				|__ index.js 
+				<baseurl>/comapny 		       => renders index.js in company folder 
+				<baseurl>/company/mission	       => renders mission.js in company folder 
+
+
+Link to pages
+	=> Import Link from gatsby
+	=> <Link  to=<url route> ></Link>
+
+
+Using plugins
+	=> find the plugin name/object in gatsby docs
+	=> Do necessary npm installation
+	=> Add them inside plugins in gatsby config file (if string it should be a wrapped with template literals not with single or double quotes)
+	=> After adding a new plugin restart the server
+
+
+Gatsby Image Plugin (Optimisation feature)
+	=> gatsby-plugin-Image (StaticImage, DynamicImage or GatsbyImage)
+	
+	1. StaticImage
+		Limitations
+			=> props not allowed as src
+			=> attributes for StaticImage component should be inside same file (should not be from props)
+
+	2. GatsbyImage
+		=> All the image related data such as src, width, layout.,  is given under `image` attribute in GatsbyImage tag.
+		=> Can have the data from props (dynamic data)
+
+
+GraphQL
+	=> Static query (used in both regular/simple component or page component)
+		=> render props
+		=> useStaticQuery Hook
+	=> Page query (used only page component)
+
+	1. Static query (useStaticQuery Hook)
+		=> Can be used only in react function component (function name should be Pascal case)
+		=> takes in graphql query as argument
+		=> quey name should be unique
+	
+	2. Page query
+		=> No need for executing the graphql query as we do in static query
+		=> exporting the graphql query in the page file will execute the query and send the response in props (with key data) to that component
+
+
+Gatsby source file system
+	=> install package and add respective plugin to config
+	=> path - which folder we need to access
+	=> name - any name
+	=> if we want to access multiple folders 
+    1. Give path as the common parent to all the folders that we want to access
+    2. Use multiple pulgins with individual path to all folders
+	=> Once done we can access those files in graphql under file and allFile
+
+
+CMS Data GraphQL
+	=> install package and add the respective plugin to config with credentials
+	=> Adding the plugin will fetch the data on load of the site and we have access to all those data via graphql
+
+
+Create dynamic pages
+	=> FileSystem Route API
+		=> For conevntions and syntax refer docs
+		=> Gatsby creates the dynmaic routes in ladder case, inorder to match the `to` in `Link` we could use slugify package
+		=> For dynamic data, we write gql query with query function variables and variables are passed by gatsby internally and data is added into the props of that page. 
+
+	=> Gatsby node (as there is a network request (via graphql), it's asynchronous, so should be handled with promises or async/await)
+		=> Create gatsby-node.js file in root folder
+		=> export createPages function (used args : graphql, actions)
+		=> create pages dynamically using createPage method in actions
+		=> createPage takes an object as argument. ({
+			path: __, (any dynamic path)
+			component: __, (template component to be rendered, (note: path module is required))
+			context: {
+				__
+			}
+		})
+
+
+Fonts
+	=> Loading of fonts happens after the loading of components. Inorder to load fonts first should add font preloading plugins in config.
+
+
+Metadata
+	=> For setting up metadata for the site, We go with react helmet plugin.
